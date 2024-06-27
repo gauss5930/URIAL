@@ -78,7 +78,7 @@ def load_eval_data(args, data_name=None, model_name=None):
         dataset = load_dataset("json", data_files="run_scripts/mt-bench/question.jsonl", split="train")
         metadata = {"question_id": [], "category": []}        
         if args.mt_turn == 2:
-            with open(args.mt_turn1_result, "r") as f:
+            with open(args.output_folder + "/" + args.model_name.split("/")[-1] + ".turn1.json", "r") as f:
                 mt_turn1_result = json.load(f)
             id_to_turn1_result = {}
             for item in mt_turn1_result:

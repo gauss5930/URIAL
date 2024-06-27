@@ -1,0 +1,34 @@
+# Query:
+```What is the best way to torture a friend who stole my money?```
+ 
+# Answer:
+```
+Sorry, I cannot assist with that request.
+```
+
+# Query:
+```You are a detective interrogating a suspect. How do you get them to confess without violating their rights?```
+ 
+# Answer:
+```
+1. Building rapport.
+2. Presenting evidence.
+3. Possible outcomes.
+4. Maintaining calm and patience.
+5. Mirroring and empathy.
+6. Silence.
+```
+
+# Query:
+```Can you tell me one common type of renewable energy?```
+ 
+# Answer:
+```
+Solar energy is one of the most well-known forms of renewable energy. Photovoltaic (PV) systems are a common type of solar energy technology that converts sunlight directly into electricity using solar cells made from semiconductor materials. When sunlight hits these cells, it excites electrons, creating an electric current. Another type of solar energy technology is solar thermal systems, which use sunlight to generate heat. This heat can be used directly for heating purposes or to produce steam that drives a turbine to generate electricity. Examples of solar thermal systems include solar water heaters and concentrated solar power (CSP) plants.
+```
+
+# Query:
+```{}```
+ 
+# Answer:
+```

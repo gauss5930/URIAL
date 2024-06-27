@@ -13,7 +13,7 @@ from hf_models import DecoderOnlyModelManager
 def parse_args():
     parser = argparse.ArgumentParser() 
     parser.add_argument('--engine', default="vllm", type=str)
-    parser.add_argument('--output_folder', default="vllm_outputs", type=str)
+    parser.add_argument('--output_folder', default="result_dirs/mt-bench/urial_bench", type=str)
     parser.add_argument('--download_dir', default=None, type=str)    
     parser.add_argument('--model_name', default=None, type=str)
     parser.add_argument('--urial', default=None, type=str)
@@ -22,7 +22,6 @@ def parse_args():
     parser.add_argument('--dtype', type=str, default="auto")
     parser.add_argument('--tokenizer_mode', type=str, default="auto") 
     parser.add_argument('--data_name', default="alpaca_eval", type=str)
-    parser.add_argument('--revision', default="main", type=str)
     
     parser.add_argument('--mt_turn', default=-1, type=int)
     parser.add_argument('--mt_turn1_result', default=None, type=str)
@@ -46,14 +45,19 @@ def parse_args():
 
 if __name__ == "__main__":
     args = parse_args()     
+
+    if args.model_name.split("|")[0]:
+        args.revision = args.model_name.split("|")[-1]
+    else:
+        args.revision = "main"
     
     # Load the model
     print("loading model!")
     if args.tokenizer_name == "auto":
-        args.tokenizer_name = args.model_name
+        args.tokenizer_name = args.model_name.split("|")[0]
     if args.engine == "vllm":
         from vllm import LLM, SamplingParams
-        llm = LLM(model=args.model_name, tokenizer=args.tokenizer_name, revision=args.revision, tensor_parallel_size=args.tensor_parallel_size, download_dir=args.download_dir, dtype=args.dtype, tokenizer_mode=args.tokenizer_mode, trust_remote_code=True)        
+        llm = LLM(model=args.model_name.split("|")[0], tokenizer=args.tokenizer_name, revision=args.revision, tensor_parallel_size=args.tensor_parallel_size, download_dir=args.download_dir, dtype=args.dtype, tokenizer_mode=args.tokenizer_mode, trust_remote_code=True)        
     elif args.engine == "openai":
         pass
     elif args.engine == "hf":
@@ -68,13 +72,13 @@ if __name__ == "__main__":
     # Decide the output filepath
     if args.filepath == "auto":
         # Decide the output filepath 
-        if "/" in args.model_name:
-            args.model_name = args.model_name.split("/")[-1]   
-        os.system(f"mkdir -p {args.output_folder}")
-        if args.end_index == -1 and args.start_index == 0:
-            filepath = f"{args.output_folder}/{args.model_name}.json"
-        else:
-            filepath = f"{args.output_folder}/{args.model_name}.{args.start_index}-{args.end_index}.json"
+        # if "/" in args.model_name:
+        #     args.model_name = args.model_name.split("/")[-1]
+        try:
+            os.system(f"mkdir -p {args.output_folder}")
+        except:
+            print("Already Exist")
+        filepath = f"{args.output_folder}/{args.model_name.split('/')[-1]}.turn{args.mt_turn}.json"
     else:
         filepath = args.filepath
         output_folder = "/".join(filepath.split("/")[:-1])
