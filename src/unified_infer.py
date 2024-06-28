@@ -46,7 +46,7 @@ def parse_args():
 if __name__ == "__main__":
     args = parse_args()     
 
-    if args.model_name.split("|")[0]:
+    if len(args.model_name.split("|")) > 1:
         args.revision = args.model_name.split("|")[-1]
     else:
         args.revision = "main"

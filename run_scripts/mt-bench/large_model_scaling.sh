@@ -36,7 +36,7 @@ tsp=${9:-8}
 echo "Logging into Hugging Face Hub"
 huggingface-cli login --token "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"
 
-for MODEL_PATH in "${SMALL_MODELS[@]}"
+for MODEL_PATH in "${LARGE_MODELS[@]}"
 do
     CUDA_VISIBLE_DEVICES=$gpu python src/unified_infer.py \
         --urial $version \
