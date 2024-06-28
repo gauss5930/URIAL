@@ -118,9 +118,9 @@ if __name__ == "__main__":
     
     todo_inputs = model_inputs[num_skipped:]
     
-    if args.engine == "vllm": 
+    if args.engine == "vllm":
         sampling_params = SamplingParams(top_p=args.top_p, temperature=args.temperature, repetition_penalty=args.repetition_penalty, max_tokens=args.max_tokens, 
-                                         stop=stop_words, stop_token_ids=stop_token_ids, include_stop_str_in_output=include_stop_str_in_output, n=args.num_outputs)
+                                         stop=stop_words, stop_token_ids=stop_token_ids, include_stop_str_in_output=include_stop_str_in_output, n=args.num_outputs, min_tokens=32)
         for cur_id in tqdm(range(0, len(todo_inputs), args.batch_size), desc=f"Generating {args.model_name} from {args.start_index} to {args.end_index}"):
             batch_inputs = todo_inputs[cur_id:cur_id+args.batch_size]
             batch_outputs = llm.generate(batch_inputs, sampling_params, use_tqdm=False)
